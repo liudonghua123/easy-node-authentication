@@ -16,3 +16,9 @@ node_modules
 
 config/secretDatabase.js
 config/secretAuth.js
+
+# project files
+.idea
+
+# mongodb database files
+data

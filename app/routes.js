@@ -146,14 +146,26 @@ module.exports = function(app, passport) {
 // for local account, remove email and password
 // user account will stay active in case they want to reconnect in the future
 
+    // load up the user model
+    var db = require('./models')
+    var User = db.User;
+
 	// local -----------------------------------
 	app.get('/unlink/local', function(req, res) {
-		var user            = req.user;
-		user.local.email    = undefined;
-		user.local.password = undefined;
-		user.save(function(err) {
-			res.redirect('/profile');
-		});
+//		var user            = req.user;
+//		user.email    = undefined;
+//		user.password = undefined;
+//		user.save(function(err) {
+//			res.redirect('/profile');
+//		});
+        var user = req.user;
+        User.destroy({id : user.id}).on('success', function(user){
+            console.log(user);
+            res.redirect('/profile');
+        }).on('failure', function(err){
+            console.log(err);
+        });
+
 	});
 
 	// facebook -------------------------------
